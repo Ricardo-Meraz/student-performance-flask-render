@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de puntaje académico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Predicción de puntaje de examen</h1>
+
+        <p class="descripcion">
+            Esta aplicación utiliza un modelo Ridge con PCA para estimar el puntaje de examen de un estudiante
+            a partir de sus hábitos académicos y personales.
+        </p>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if prediccion is not none %}
+            <div class="resultado">
+                Puntaje estimado: <strong>{{ prediccion }}</strong> / 100
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            <h2>Datos del estudiante</h2>
+
+            <label>Edad:</label>
+            <input type="number" name="age" min="0" max="100" required>
+
+            <label>Género:</label>
+            <select name="gender" required>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label>Horas de estudio por día:</label>
+            <input type="number" step="0.1" name="study_hours_per_day" min="0" max="24" required>
+
+            <label>Horas en redes sociales por día:</label>
+            <input type="number" step="0.1" name="social_media_hours" min="0" max="24" required>
+
+            <label>Horas de Netflix por día:</label>
+            <input type="number" step="0.1" name="netflix_hours" min="0" max="24" required>
+
+            <label>¿Tiene trabajo de medio tiempo?</label>
+            <select name="part_time_job" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+
+            <label>Porcentaje de asistencia:</label>
+            <input type="number" step="0.1" name="attendance_percentage" min="0" max="100" required>
+
+            <label>Horas de sueño por día:</label>
+            <input type="number" step="0.1" name="sleep_hours" min="0" max="24" required>
+
+            <label>Calidad de alimentación:</label>
+            <select name="diet_quality" required>
+                <option value="Poor">Poor</option>
+                <option value="Fair">Fair</option>
+                <option value="Good">Good</option>
+            </select>
+
+            <label>Frecuencia de ejercicio por semana:</label>
+            <input type="number" name="exercise_frequency" min="0" max="7" required>
+
+            <label>Nivel educativo de los padres:</label>
+            <select name="parental_education_level" required>
+                <option value="High School">High School</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+            </select>
+
+            <label>Calidad de internet:</label>
+            <select name="internet_quality" required>
+                <option value="Poor">Poor</option>
+                <option value="Average">Average</option>
+                <option value="Good">Good</option>
+            </select>
+
+            <label>Salud mental del estudiante (1 a 10):</label>
+            <input type="number" name="mental_health_rating" min="1" max="10" required>
+
+            <label>¿Participa en actividades extracurriculares?</label>
+            <select name="extracurricular_participation" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+
+            <button type="submit">Realizar predicción</button>
+        </form>
+    </div>
+
+</body>
+</html>
